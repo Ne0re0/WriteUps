@@ -1,0 +1,204 @@
+
+| Category | Misc |
+| -------- | ---- |
+| Solves   | < 10 |
+| Points   | ~450 |
+
+# Description
+
+I do not remember the actual description so, I will try to give you the main idea.
+
+A member of your red team has retrieved this NFC card from a regular user, you have to understand the mechanism to log in as admin
+
+# Given information
+
+We have a file called `card.nfc`
+
+```nfc
+Filetype: Flipper NFC device
+Version: 3
+# Nfc device type can be UID, Mifare Ultralight, Mifare Classic or ISO15693
+Device type: Mifare Classic
+# UID is common for all formats
+UID: 8D AF 88 4F
+# ISO14443 specific fields
+ATQA: 00 04
+SAK: 08
+# Mifare Classic specific data
+Mifare Classic type: 1K
+Data format version: 2
+# Mifare Classic blocks, '??' means unknown data
+Block 0: 8D AF 88 4F E5 88 04 00 C8 47 00 20 00 00 00 16
+Block 1: 78 7E 68 7F 0D 00 00 00 00 00 00 00 00 00 00 00
+Block 2: 0D 0D 0D 0D 0D 00 00 00 00 00 00 00 00 00 00 00
+Block 3: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 4: 63 68 65 63 6B 73 75 6D 38 78 6F 72 00 00 00 1C
+Block 5: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 6: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 7: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 9: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 11: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 12: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 13: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 14: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 15: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 16: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 17: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 18: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 19: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 21: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 22: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 23: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 24: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 25: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 26: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 27: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 28: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 29: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 31: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 32: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 33: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 34: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 35: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 36: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 37: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 38: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 39: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 41: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 42: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 43: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 44: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 45: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 46: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 47: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 48: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 49: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 51: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 52: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 53: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 54: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 55: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 56: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 57: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 58: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 59: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 61: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 62: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 63: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76 
+```
+
+
+# Cleaning the file
+
+In order to better understand how this nfc card works, we can delete all blocks that are not actual informations such as headers (`88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76` lines are headers) and all empty lines which gives us : 
+
+```nfc
+...
+Block 1: 78 7E 68 7F 0D 00 00 00 00 00 00 00 00 00 00 00
+Block 2: 0D 0D 0D 0D 0D 00 00 00 00 00 00 00 00 00 00 00
+...
+Block 4: 63 68 65 63 6B 73 75 6D 38 78 6F 72 00 00 00 1C
+...
+```
+
+We note that the block 4 contains the string `checksum8xor` and one not null byte at the end.
+
+# Xoring 
+
+1. By xoring `78 7E 68 7F 0D` with `0D 0D 0D 0D 0D` we obtain the ascii for `user`
+2. By xoring `78` with `7E` and  `68` and `7F` and `0D` we obtain `1C` which is our checksum (i.e. the last block 4 byte)
+
+So, since our goal is to login as `admin` we have to xor `admin` with `0D 0D 0D 0D 0D` which gives us `6C 69 60 64 63`.
+
+And xoring `6C` with `69` and `60` and `64` and `63` returns `62`
+
+# Replace
+
+We now have all informations to recreate the nfc file to log in as admin
+
+```nfc
+Filetype: Flipper NFC device
+Version: 3
+# Nfc device type can be UID, Mifare Ultralight, Mifare Classic or ISO15693
+Device type: Mifare Classic
+# UID is common for all formats
+UID: 8D AF 88 4F
+# ISO14443 specific fields
+ATQA: 00 04
+SAK: 08
+# Mifare Classic specific data
+Mifare Classic type: 1K
+Data format version: 2
+# Mifare Classic blocks, '??' means unknown data
+Block 0: 8D AF 88 4F E5 88 04 00 C8 47 00 20 00 00 00 16
+Block 1: 6C 69 60 64 63 00 00 00 00 00 00 00 00 00 00 00
+Block 2: 0D 0D 0D 0D 0D 00 00 00 00 00 00 00 00 00 00 00
+Block 3: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 4: 63 68 65 63 6B 73 75 6D 38 78 6F 72 00 00 00 62
+Block 5: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 6: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 7: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 9: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 11: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 12: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 13: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 14: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 15: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 16: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 17: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 18: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 19: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 21: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 22: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 23: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 24: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 25: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 26: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 27: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 28: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 29: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 31: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 32: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 33: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 34: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 35: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 36: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 37: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 38: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 39: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 41: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 42: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 43: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 44: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 45: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 46: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 47: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 48: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 49: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 51: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 52: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 53: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 54: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 55: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 56: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 57: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 58: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 59: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+Block 60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 61: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 62: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Block 63: 88 29 DA 9D AF 76 7F 07 88 00 88 29 DA 9D AF 76
+```
